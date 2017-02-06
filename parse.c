@@ -16,7 +16,7 @@
 #define ROOTNAME "if-archive"
 
 #define BUFSIZE (255)
-#define EXCLUDESIZE (32)
+#define EXCLUDESIZE (64)
 
 typedef struct contextsubdir_struct {
   hash_t *dirlist;
