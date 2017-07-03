@@ -74,7 +74,7 @@ void add_dir_links(hash_t *dir, char* path)
     }
     jx++;
   }
-	hash_put(dir, "xdirlinks", new_string(buf));
+  hash_put(dir, "xdirlinks", new_string(buf));
 }
 
 int parse_master(char *master, hash_t *dirlist, char *toplevelbody,
@@ -130,8 +130,8 @@ int parse_master(char *master, hash_t *dirlist, char *toplevelbody,
     else {
       buflen = strlen(buf);
       if (buflen && buf[buflen-1] == '\n') {
-	buflen--;
-	buf[buflen] = '\0';
+        buflen--;
+        buf[buflen] = '\0';
       }
     }
 
@@ -139,37 +139,37 @@ int parse_master(char *master, hash_t *dirlist, char *toplevelbody,
 
     if (done || (!strncmp(buf, ROOTNAME, 10) && buf[buflen-1] == ':')) {
       if (dir) {
-	int len;
+        int len;
 
-	if (file) {
-	  if (filestr) {
-	    hash_put(file, "desc", filestr);
+        if (file) {
+          if (filestr) {
+            hash_put(file, "desc", filestr);
             if (is_string_nonwhite(filestr))
               hash_put(file, "hasdesc", "1");
-	    filestr = NULL;
-	  }
-	  if (filestrraw) {
+            filestr = NULL;
+          }
+          if (filestrraw) {
             char *dx = new_string_esc_xml(filestrraw);
             trim_extra_newlines(dx);
-	    hash_put(file, "xmldesc", dx);
+            hash_put(file, "xmldesc", dx);
             if (is_string_nonwhite(filestrraw))
               hash_put(file, "hasxmldesc", "1");
-	    filestrraw = NULL;
-	  }
-	  hash_put(filelist, (char *)hash_get(file, "rawname"), file);
-	  file = NULL;
-	}
+            filestrraw = NULL;
+          }
+          hash_put(filelist, (char *)hash_get(file, "rawname"), file);
+          file = NULL;
+        }
 
-	cx = hash_get(dir, "dir");
-	if (verbose)
-	  printf("Completing %s...\n", cx);
-	hash_put(dirlist, cx, dir);
-	if (headerstr) {
-	  hash_put(dir, "header", headerstr);
+        cx = hash_get(dir, "dir");
+        if (verbose)
+          printf("Completing %s...\n", cx);
+        hash_put(dirlist, cx, dir);
+        if (headerstr) {
+          hash_put(dir, "header", headerstr);
           if (is_string_nonwhite(headerstr))
             hash_put(dir, "hasdesc", "1");
-	  headerstr = NULL;
-	}
+          headerstr = NULL;
+        }
         if (headerstrraw) {
           trim_extra_newlines(headerstrraw);
           hash_put(dir, "xmlheader", new_string_esc_xml(headerstrraw));
@@ -177,49 +177,49 @@ int parse_master(char *master, hash_t *dirlist, char *toplevelbody,
             hash_put(dir, "hasxmldesc", "1");
           headerstrraw = NULL;
         }
-	dir = NULL;
-	filelist = NULL;
+        dir = NULL;
+        filelist = NULL;
       }
 
       if (!done) {
-	char *cx2, *cx3;
+        char *cx2, *cx3;
 
-	dir = new_hash();
-	filelist = new_hash();
-	file = NULL;
-	filestr = NULL;
+        dir = new_hash();
+        filelist = new_hash();
+        file = NULL;
+        filestr = NULL;
         filestrraw = NULL;
-	hash_put(dir, "@files", filelist);
-	buflen--;
+        hash_put(dir, "@files", filelist);
+        buflen--;
         buf[buflen] = '\0';
-	if (verbose)
-	  printf("Starting %s:\n", buf);
+        if (verbose)
+          printf("Starting %s:\n", buf);
 
-	hash_put(dir, "dir", new_string(buf));
+        hash_put(dir, "dir", new_string(buf));
 
-	cx = new_string(buf);
-	for (cx2 = cx; *cx2; cx2++)
-	  if (*cx2 == '/')
+        cx = new_string(buf);
+        for (cx2 = cx; *cx2; cx2++)
+          if (*cx2 == '/')
             *cx2 = 'X';
-	hash_put(dir, "xdir", cx);
-  add_dir_links(dir, buf);
+        hash_put(dir, "xdir", cx);
+        add_dir_links(dir, buf);
 
-	cx = new_string(buf);
-	for (cx2=cx, cx3=NULL; *cx2; cx2++)
-	  if (*cx2 == '/')
-	    cx3 = cx2;
-	if (cx3) {
-	  *cx3 = '\0';
-	  hash_put(dir, "parentdir", new_string(cx));
-	  for (cx2 = cx; *cx2; cx2++)
-	    if (*cx2 == '/')
-	      *cx2 = 'X';
-	  hash_put(dir, "xparentdir", cx);
-	}
-	
-	inheader = TRUE;
-	headerpara = TRUE;
-	headerstr = NULL;
+        cx = new_string(buf);
+        for (cx2=cx, cx3=NULL; *cx2; cx2++)
+          if (*cx2 == '/')
+            cx3 = cx2;
+        if (cx3) {
+          *cx3 = '\0';
+          hash_put(dir, "parentdir", new_string(cx));
+          for (cx2 = cx; *cx2; cx2++)
+            if (*cx2 == '/')
+              *cx2 = 'X';
+          hash_put(dir, "xparentdir", cx);
+        }
+        
+        inheader = TRUE;
+        headerpara = TRUE;
+        headerstr = NULL;
         headerstrraw = NULL;
       }
 
@@ -233,9 +233,9 @@ int parse_master(char *master, hash_t *dirlist, char *toplevelbody,
     jx = 0;
     for (cx = buf; *cx; cx++) {
       if (*cx == ' ')
-	continue;
+        continue;
       if (!(*cx >= ' ' && *cx <= '-'))
-	break;
+        break;
       jx++;
     }
     if (*cx == '\0' && jx)
@@ -246,28 +246,28 @@ int parse_master(char *master, hash_t *dirlist, char *toplevelbody,
 
     if (inheader) {
       if (!strncmp(cx, "Index", 5)) {
-	cx += 5;
-	for (; *cx == ' '; cx++);
-	if (!strncasecmp(cx, "this file", 9)) {
-	  inheader = FALSE;
-	  continue;
-	}
+        cx += 5;
+        for (; *cx == ' '; cx++);
+        if (!strncasecmp(cx, "this file", 9)) {
+          inheader = FALSE;
+          continue;
+        }
       }
     }
 
     if (inheader) {
       if (strlen(bx)) {
-	headerstr = append_string_esc(headerstr, bx, 0);
-	headerstr = append_string(headerstr, "\n");
-	headerpara = FALSE;
+        headerstr = append_string_esc(headerstr, bx, 0);
+        headerstr = append_string(headerstr, "\n");
+        headerpara = FALSE;
         headerstrraw = append_string(headerstrraw, bx);
-	headerstrraw = append_string(headerstrraw, "\n");
+        headerstrraw = append_string(headerstrraw, "\n");
       }
       else {
-	if (!headerpara) {
-	  headerstr = append_string(headerstr, "<p>\n");
-	  headerpara = TRUE;
-	}
+        if (!headerpara) {
+          headerstr = append_string(headerstr, "<p>\n");
+          headerpara = TRUE;
+        }
         if (headerstrraw && headerstrraw[0]) {
           headerstrraw = append_string(headerstrraw, "\n");
         }
@@ -280,22 +280,22 @@ int parse_master(char *master, hash_t *dirlist, char *toplevelbody,
       int len;
 
       if (file) {
-	if (filestr) {
-	  hash_put(file, "desc", filestr);
+        if (filestr) {
+          hash_put(file, "desc", filestr);
           if (is_string_nonwhite(filestr))
             hash_put(file, "hasdesc", "1");
-	  filestr = NULL;
-	}
-	if (filestrraw) {
+          filestr = NULL;
+        }
+        if (filestrraw) {
           char *dx = new_string_esc_xml(filestrraw);
           trim_extra_newlines(dx);
-	  hash_put(file, "xmldesc", dx);
+          hash_put(file, "xmldesc", dx);
           if (is_string_nonwhite(filestrraw))
             hash_put(file, "hasxmldesc", "1");
-	  filestrraw = NULL;
-	}
-	hash_put(filelist, (char *)hash_get(file, "rawname"), file);
-	file = NULL;
+          filestrraw = NULL;
+        }
+        hash_put(filelist, (char *)hash_get(file, "rawname"), file);
+        file = NULL;
       }
 
       file = new_hash();
@@ -310,18 +310,18 @@ int parse_master(char *master, hash_t *dirlist, char *toplevelbody,
       id[len] = '\0';
 
       while (*cx2 == ' ')
-	cx2++;
+        cx2++;
       if (*cx2) {
-	firstindent = (cx2-buf);
-	filestr = append_string_esc(NULL, cx2, 0);
-	filestr = append_string(filestr, "\n");
-	filestrraw = append_string(NULL, cx2);
-	filestrraw = append_string(filestrraw, "\n");
-	brackets = bracket_count(cx2);
+        firstindent = (cx2-buf);
+        filestr = append_string_esc(NULL, cx2, 0);
+        filestr = append_string(filestr, "\n");
+        filestrraw = append_string(NULL, cx2);
+        filestrraw = append_string(filestrraw, "\n");
+        brackets = bracket_count(cx2);
       }
       else {
-	firstindent = -1;
-	filestr = new_string("");
+        firstindent = -1;
+        filestr = new_string("");
         filestrraw = new_string("");
       }
 
@@ -332,18 +332,18 @@ int parse_master(char *master, hash_t *dirlist, char *toplevelbody,
     }
     else {
       if (strlen(bx)) {
-	if (firstindent < 0) {
-	  firstindent = indent;
-	  brackets = 0;
-	}
-	if ((firstindent != indent) && (brackets == 0)) {
-	  filestr = append_string(filestr, "<br>&nbsp;&nbsp;");
+        if (firstindent < 0) {
+          firstindent = indent;
+          brackets = 0;
+        }
+        if ((firstindent != indent) && (brackets == 0)) {
+          filestr = append_string(filestr, "<br>&nbsp;&nbsp;");
           filestrraw = append_spaces(filestrraw, indent-firstindent);
         }
-	filestr = append_string_esc(filestr, bx, 0);
-	filestr = append_string(filestr, "\n");
+        filestr = append_string_esc(filestr, bx, 0);
+        filestr = append_string(filestr, "\n");
         filestrraw = append_string(filestrraw, bx);
-	brackets += bracket_count(bx);
+        brackets += bracket_count(bx);
       }
       filestrraw = append_string(filestrraw, "\n");
     }
@@ -451,33 +451,33 @@ static void scan_directory(hash_t *dirlist, char *treedir, char *dirname,
       int linklen;
       linklen = readlink(pathname, linkname, MAXPATHLEN);
       if (linklen <= 0) {
-	show_warning2("Unable to readlink.", pathname);
+        show_warning2("Unable to readlink.", pathname);
       }
       else {
-	linkname[linklen] = '\0';
-	if (linklen && linkname[linklen-1] == '/') {
-	  linklen--;
-	  linkname[linklen] = '\0';
-	}
-	if (!stat(pathname, &sta2)) {
-	  if (S_ISREG(sta2.st_mode)) {
-	    hash_t *file;
-	    char *cx;
-	    struct tm *tmdat;
-	    char datebuf[32];
-	    file = hash_get(filelist, fname);
-	    if (!file) {
-	      if (check_exclude(exclude,dirname2))
-		continue;
-	      file = new_hash();
-	      cx = new_string(fname);
-	      hash_put(file, "rawname", cx);
-	      hash_put_escurl(file, "name", "nameurl", cx);
-	      hash_put_escxml(file, "namexml", cx);
-	      hash_put(file, "dir", new_string_esc(dirname));
-	      hash_put(file, "desc", " ");
-	      hash_put(filelist, cx, file);
-	    }
+        linkname[linklen] = '\0';
+        if (linklen && linkname[linklen-1] == '/') {
+          linklen--;
+          linkname[linklen] = '\0';
+        }
+        if (!stat(pathname, &sta2)) {
+          if (S_ISREG(sta2.st_mode)) {
+            hash_t *file;
+            char *cx;
+            struct tm *tmdat;
+            char datebuf[32];
+            file = hash_get(filelist, fname);
+            if (!file) {
+              if (check_exclude(exclude,dirname2))
+                continue;
+              file = new_hash();
+              cx = new_string(fname);
+              hash_put(file, "rawname", cx);
+              hash_put_escurl(file, "name", "nameurl", cx);
+              hash_put_escxml(file, "namexml", cx);
+              hash_put(file, "dir", new_string_esc(dirname));
+              hash_put(file, "desc", " ");
+              hash_put(filelist, cx, file);
+            }
             hash_put(file, "islink", "1");
             hash_put(file, "islinkfile", "1");
             hash_put(file, "linkpath", new_string(linkname)); /* ### canonicalize */
@@ -487,64 +487,64 @@ static void scan_directory(hash_t *dirlist, char *treedir, char *dirname,
             sprintf(datebuf, "%02d-%s-%d", 
               tmdat->tm_mday, monthlist[tmdat->tm_mon], tmdat->tm_year+1900);
             hash_put(file, "datestr", new_string(datebuf));
-	  }
-	  else if (S_ISDIR(sta2.st_mode)) { 
-	    char targetname[MAXPATHLEN+1];
-	    int targetlen;
-	    char *cx, *cx2;
-	    hash_t *file;
-	    strcpy(targetname, dirname);
-	    targetlen = strlen(targetname);
-	    for (cx = linkname; *cx; ) {
-	      cx2 = strchr(cx, '/');
-	      if (!cx2) {
-		cx2 = cx + strlen(cx);
-	      }
-	      if (cx2-cx == 1 && cx[0] == '.') {
-		/* nothing */
-	      }
-	      else if (cx2-cx == 2 && cx[0] == '.' && cx[1] == '.') {
-		if (targetlen)
-		  targetlen--;
-		while (targetlen && targetname[targetlen] != '/')
-		  targetlen--;
-	      }
-	      else {
-		targetname[targetlen] = '/';
-		targetlen++;
-		memcpy(targetname+targetlen, cx, sizeof(char) * (cx2-cx));
-		targetlen += (cx2-cx);
-	      }
-	      if (*cx2 == '/')
-		cx2++;
-	      cx = cx2;
-	    }
-	    targetname[targetlen] = '\0';
-	    if (targetname[0] == '/')
-	      continue;
-	    file = hash_get(filelist, fname);
-	    if (!file) {
-	      char tempname[MAXPATHLEN+1];
-	      sprintf(tempname, "Symlink to %s", targetname);
-	      file = new_hash();
-	      cx = new_string(fname);
-	      hash_put(file, "name", cx);
-	      hash_put_escxml(file, "namexml", cx);
-	      hash_put(file, "dir", new_string(dirname));
-	      hash_put(file, "desc", new_string(tempname));
-	      hash_put(filelist, cx, file);
-	    }
+          }
+          else if (S_ISDIR(sta2.st_mode)) { 
+            char targetname[MAXPATHLEN+1];
+            int targetlen;
+            char *cx, *cx2;
+            hash_t *file;
+            strcpy(targetname, dirname);
+            targetlen = strlen(targetname);
+            for (cx = linkname; *cx; ) {
+              cx2 = strchr(cx, '/');
+              if (!cx2) {
+                cx2 = cx + strlen(cx);
+              }
+              if (cx2-cx == 1 && cx[0] == '.') {
+                /* nothing */
+              }
+              else if (cx2-cx == 2 && cx[0] == '.' && cx[1] == '.') {
+                if (targetlen)
+                  targetlen--;
+                while (targetlen && targetname[targetlen] != '/')
+                  targetlen--;
+              }
+              else {
+                targetname[targetlen] = '/';
+                targetlen++;
+                memcpy(targetname+targetlen, cx, sizeof(char) * (cx2-cx));
+                targetlen += (cx2-cx);
+              }
+              if (*cx2 == '/')
+                cx2++;
+              cx = cx2;
+            }
+            targetname[targetlen] = '\0';
+            if (targetname[0] == '/')
+              continue;
+            file = hash_get(filelist, fname);
+            if (!file) {
+              char tempname[MAXPATHLEN+1];
+              sprintf(tempname, "Symlink to %s", targetname);
+              file = new_hash();
+              cx = new_string(fname);
+              hash_put(file, "name", cx);
+              hash_put_escxml(file, "namexml", cx);
+              hash_put(file, "dir", new_string(dirname));
+              hash_put(file, "desc", new_string(tempname));
+              hash_put(filelist, cx, file);
+            }
             hash_put(file, "islink", "1");
             hash_put(file, "islinkdir", "1");
-	    cx = new_string(targetname);
-	    hash_put(file, "linkdir", cx);
-	    cx = new_string(targetname);
-	    for (cx2 = cx; *cx2; cx2++)
-	      if (*cx2 == '/')
-		*cx2 = 'X';
-	    hash_put(file, "xlinkdir", cx);
-	  }
-	}
+            cx = new_string(targetname);
+            hash_put(file, "linkdir", cx);
+            cx = new_string(targetname);
+            for (cx2 = cx; *cx2; cx2++)
+              if (*cx2 == '/')
+                *cx2 = 'X';
+            hash_put(file, "xlinkdir", cx);
+          }
+        }
       }
     }
     else if (S_ISREG(sta.st_mode)) {
@@ -554,19 +554,19 @@ static void scan_directory(hash_t *dirlist, char *treedir, char *dirname,
       struct tm *tmdat;
       char datebuf[32];
       if (!strcmp(fname, "Index"))
-	continue;
+        continue;
       file = hash_get(filelist, fname);
       if (!file) {
-	if (check_exclude(exclude,dirname2))
-	  continue;
-	file = new_hash();
-	cx = new_string(fname);
-	hash_put(file, "rawname", cx);
-	hash_put_escurl(file, "name", "nameurl", cx);
-	hash_put_escxml(file, "namexml", cx);
-	hash_put(file, "dir", new_string_esc(dirname));
-	hash_put(file, "desc", " ");
-	hash_put(filelist, cx, file);
+        if (check_exclude(exclude,dirname2))
+          continue;
+        file = new_hash();
+        cx = new_string(fname);
+        hash_put(file, "rawname", cx);
+        hash_put_escurl(file, "name", "nameurl", cx);
+        hash_put_escxml(file, "namexml", cx);
+        hash_put(file, "dir", new_string_esc(dirname));
+        hash_put(file, "desc", " ");
+        hash_put(filelist, cx, file);
       }
       sprintf(datebuf, "%ld", (long)sta.st_size);
       hash_put(file, "filesize", new_string(datebuf));
@@ -574,7 +574,7 @@ static void scan_directory(hash_t *dirlist, char *treedir, char *dirname,
       hash_put(file, "date", new_string(datebuf));
       tmdat = localtime(&sta.st_mtime);
       sprintf(datebuf, "%02d-%s-%d", 
-	tmdat->tm_mday, monthlist[tmdat->tm_mon], tmdat->tm_year+1900);
+        tmdat->tm_mday, monthlist[tmdat->tm_mon], tmdat->tm_year+1900);
       hash_put(file, "datestr", new_string(datebuf));
       if (domd5)
         hash_put(file, "md5", new_string(md5(pathname)));
@@ -585,55 +585,55 @@ static void scan_directory(hash_t *dirlist, char *treedir, char *dirname,
       char *cx, *cx2, *cx3;
       dir2 = hash_get(dirlist, dirname2);
       if (!dir2) {
-	dir2 = new_hash();
-	cx = new_string(dirname2);
-	hash_put(dir2, "dir", cx);
-	hash_put(dirlist, cx, dir2);
-	hash_put(dir2, "@files", new_hash());
-	cx = new_string(dirname2);
-	for (cx2=cx; *cx2; cx2++)
-	  if (*cx2 == '/')
-	    *cx2 = 'X';
-	hash_put(dir2, "xdir", cx);
-  add_dir_links(dir2, dirname2);
+        dir2 = new_hash();
+        cx = new_string(dirname2);
+        hash_put(dir2, "dir", cx);
+        hash_put(dirlist, cx, dir2);
+        hash_put(dir2, "@files", new_hash());
+        cx = new_string(dirname2);
+        for (cx2=cx; *cx2; cx2++)
+          if (*cx2 == '/')
+            *cx2 = 'X';
+        hash_put(dir2, "xdir", cx);
+        add_dir_links(dir2, dirname2);
 
-	cx = new_string(dirname2);
-	for (cx2=cx, cx3=NULL; *cx2; cx2++)
-	  if (*cx2 == '/')
-	    cx3 = cx2;
-	if (cx3) {
-	  *cx3 = '\0';
-	  hash_put(dir2, "parentdir", new_string(cx));
-	  for (cx2 = cx; *cx2; cx2++)
-	    if (*cx2 == '/')
-	      *cx2 = 'X';
-	  hash_put(dir2, "xparentdir", cx);
-	}
+        cx = new_string(dirname2);
+        for (cx2=cx, cx3=NULL; *cx2; cx2++)
+          if (*cx2 == '/')
+            cx3 = cx2;
+        if (cx3) {
+          *cx3 = '\0';
+          hash_put(dir2, "parentdir", new_string(cx));
+          for (cx2 = cx; *cx2; cx2++)
+            if (*cx2 == '/')
+              *cx2 = 'X';
+          hash_put(dir2, "xparentdir", cx);
+        }
       }
       file = hash_get(filelist, fname);
       if (file) {
-	cx = new_string(dirname2);
-	hash_put(file, "linkdir", cx);
-	cx = new_string(dirname2);
-	for (cx2 = cx; *cx2; cx2++)
-	  if (*cx2 == '/')
-	    *cx2 = 'X';
-	hash_put(file, "xlinkdir", cx);
+        cx = new_string(dirname2);
+        hash_put(file, "linkdir", cx);
+        cx = new_string(dirname2);
+        for (cx2 = cx; *cx2; cx2++)
+          if (*cx2 == '/')
+            *cx2 = 'X';
+        hash_put(file, "xlinkdir", cx);
       }
       if (parentlist && parentdir) {
-	hash_t *parentfile;
-	char parentname[MAXPATHLEN];
-	sprintf(parentname,"%s/%s",parentdir,fname);
-	parentfile = hash_get(parentlist, parentname);
-	if (parentfile) {
-	  cx = new_string(dirname2);
-	  hash_put(parentfile, "linkdir", cx);
-	  cx = new_string(dirname2);
-	  for (cx2 = cx; *cx2; cx2++)
-	    if (*cx2 == '/')
-	      *cx2 = 'X';
-	  hash_put(parentfile, "xlinkdir", cx);
-	}
+        hash_t *parentfile;
+        char parentname[MAXPATHLEN];
+        sprintf(parentname,"%s/%s",parentdir,fname);
+        parentfile = hash_get(parentlist, parentname);
+        if (parentfile) {
+          cx = new_string(dirname2);
+          hash_put(parentfile, "linkdir", cx);
+          cx = new_string(dirname2);
+          for (cx2 = cx; *cx2; cx2++)
+            if (*cx2 == '/')
+              *cx2 = 'X';
+          hash_put(parentfile, "xlinkdir", cx);
+        }
       }
       scan_directory(dirlist, treedir, dirname2, filelist, fname, exclude, domd5);
     }
@@ -700,8 +700,8 @@ static void tabsub(char *buf)
     if (*cx == '\t') {
       count++;
       do {
-	*cx2++ = ' ';
-	len2++;
+        *cx2++ = ' ';
+        len2++;
       } while ((len2 & 8) != 0);
     }
     else {

@@ -395,7 +395,7 @@ char *append_string_esc(char *str, char *str2, int xml)
         newlen++;
       }
       else {
-	printf("Warning: non-printable character %d\n",(int)(unsigned char)*cx);
+        printf("Warning: non-printable character %d\n",(int)(unsigned char)*cx);
         newlen += 6;
         esccount++;
       }

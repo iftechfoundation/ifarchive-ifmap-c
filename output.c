@@ -267,21 +267,21 @@ int generate_datelist(char *outdir, pfile_t *plan, hash_t *dirlist,
 
     for (interval=0; interval<NUMINTERVALS; interval++) {
       if (interval)
-	sprintf(pathbuf, "%s/date_%d.html", outdir, interval);
+        sprintf(pathbuf, "%s/date_%d.html", outdir, interval);
       else
-	sprintf(pathbuf, "%s/date.html", outdir);
+        sprintf(pathbuf, "%s/date.html", outdir);
 
       fl = fopen(pathbuf, "w");
       if (!fl) {
-	perror(pathbuf);
-	printf("Cannot create datelist %d. Goodbye.\n", interval);
-	return FALSE;
+        perror(pathbuf);
+        printf("Cannot create datelist %d. Goodbye.\n", interval);
+        return FALSE;
       }
 
       con.interval = intlist[interval];
       hash_put(plan->tab, "_files", &datelistfiles_thunk);
       if (intnamelist[interval])
-	hash_put(plan->tab, "interval", intnamelist[interval]);
+        hash_put(plan->tab, "interval", intnamelist[interval]);
       substitute(body, plan->tab, &con, fl);
 
       fclose(fl);

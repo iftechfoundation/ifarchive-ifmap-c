@@ -46,10 +46,10 @@ void substitute(char *body, hash_t *tab, void *subrock, FILE *outfl)
                     putc('{', outfl);
             }
             else if (tagbuf[0] == '?') {
-	        if (depth >= MAXDEPTH-1) {
-		    show_warning2("brace-tags nested too deep", tagbuf);
-		    break;
-		}
+                if (depth >= MAXDEPTH-1) {
+                    show_warning2("brace-tags nested too deep", tagbuf);
+                    break;
+                }
                 if (activelist[depth]) {
                     depth++;
                     activelist[depth] = (tab && hash_get(tab, tagbuf+1));
@@ -83,7 +83,7 @@ void substitute(char *body, hash_t *tab, void *subrock, FILE *outfl)
                     (*fptr)(outfl, subrock);
                 }
                 else if (tagbuf[0] == '@') {
-		    fputs("[NOT-PRINTABLE]", outfl);
+                    fputs("[NOT-PRINTABLE]", outfl);
                 }
                 else {
                     fputs((char *)val, outfl);

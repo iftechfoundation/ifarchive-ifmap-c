@@ -204,16 +204,16 @@ hash_t *parse_list(char *str)
     cx = str;
 
     while (*cx) {
-	for (bx=cx; *cx && *cx != ','; cx++) { }
-	if (*cx) {
-	    *cx = '\0';
-	    cx++;
-	}
+        for (bx=cx; *cx && *cx != ','; cx++) { }
+        if (*cx) {
+            *cx = '\0';
+            cx++;
+        }
 
-	bx = trim_whitespace(bx);
-	sprintf(numbuf, "%d", counter);
-	counter++;
-	hash_put(tab, new_string(bx), new_string(numbuf));
+        bx = trim_whitespace(bx);
+        sprintf(numbuf, "%d", counter);
+        counter++;
+        hash_put(tab, new_string(bx), new_string(numbuf));
     }
 
     free(str);
