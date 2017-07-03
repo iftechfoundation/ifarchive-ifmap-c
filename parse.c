@@ -414,6 +414,9 @@ static void scan_directory(hash_t *dirlist, char *treedir, char *dirname,
   char pathname[MAXPATHLEN];
   char dirname2[MAXPATHLEN];
 
+  if (verbose)
+    printf("Scanning %s...\n", dirname);
+
   dir = hash_get(dirlist, dirname);
   if (!dir) {
     show_warning2("Unable to find directory.", dirname);
