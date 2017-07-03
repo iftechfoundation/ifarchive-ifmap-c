@@ -55,9 +55,9 @@ int main(int argc, char *argv[])
     }
     else {
       printf(
-	"Usage: %s [ -v ] [ -index Master-Index ] [ -src srcdir ] [ -dest destdir ]\n"
-	"       [ -tree treedir ] [ -xml ] [ -exclude ]\n",
-	argv[0]);
+        "Usage: %s [ -v ] [ -index Master-Index ] [ -src srcdir ] [ -dest destdir ]\n"
+        "       [ -tree treedir ] [ -xml ] [ -exclude ]\n",
+        argv[0]);
       return -1;
     }
   }
