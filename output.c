@@ -457,8 +457,11 @@ static int sort_filedates(nodepair_t *v1, nodepair_t *v2)
     return 1;
   else if (dat1-dat2 > 0)
     return -1;
-  else
-    return 0;
+
+  c1 = hash_get(pf1, "name");
+  c2 = hash_get(pf2, "name");
+  
+  return strcasecmp(c1, c2);
 }
 
 int generate_xmllist(char *outdir, char *indir, pfile_t *plan, hash_t *dirlist,
