@@ -8,9 +8,9 @@ This program has one core task: to look through all the files in the IF Archive,
 
 (The Master-Index file is created by sewing together all the Index files in all the directories of the Archive. A different script does that job.)
 
-This version has been retired in favor of [ifarchive-ifmap][].
+This version has been retired in favor of [ifarchive-ifmap-py][].
 
-[ifarchive-ifmap]: https://github.com/iftechfoundation/ifarchive-ifmap-py
+[ifarchive-ifmap-py]: https://github.com/iftechfoundation/ifarchive-ifmap-py
 
 ## Arguments
 
@@ -30,6 +30,6 @@ I wrote the first version of this program in 1999-ish. It was built around the o
 
 I wrote the program in C because it was portable and I didn't know Python or Perl yet. C is a terrible language for this sort of thing, of course -- I started by implementing my own hash tables. And escaping strings for HTML? Yuck.
 
-There are plenty of quirks and limitations which persist because C is too hard to update. Now that [ifarchive-ifmap][] exists, nobody has to.
+There are plenty of quirks and limitations which persist because C is too hard to update. Now that [ifarchive-ifmap-py][] exists, nobody has to.
 
 
